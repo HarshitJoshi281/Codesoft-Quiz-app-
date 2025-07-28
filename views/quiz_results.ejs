@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results for <%= quizName %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .result-card {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .correct {
+      border-left: 5px solid #4CAF50;
+    }
+    .incorrect {
+      border-left: 5px solid #f44336;
+    }
+    .score {
+      font-size: 24px;
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #e7f3fe;
+      border-left: 5px solid #2196F3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz Results: <%= quizName %></h1>
+  <div class="score">
+    You scored <%= score %> out of <%= totalQuestions %> (<%= Math.round((score/totalQuestions)*100) %>%)
+  </div>
+
+  <% results.forEach((result, index) => { %>
+    <div class="result-card <%= result.isCorrect ? 'correct' : 'incorrect' %>">
+      <h3>Question <%= index + 1 %>: <%= result.question %></h3>
+      <p>Your answer: <%= result.userAnswer %></p>
+      <p>Correct answer: <%= result.correctAnswer %></p>
+      <p><strong><%= result.isCorrect ? '✓ Correct' : '✗ Incorrect' %></strong></p>
+    </div>
+  <% }); %>
+
+  <a href="/get-quizzes">Take another quiz</a>
+  <div> <a href="/submit-quiz">Want to contrubute by creating new and unique quizes</a></div>
+ 
+</body>
+</html>

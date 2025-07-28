@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a0ca3;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #2ecc71;
+      --border-radius: 12px;
+      --shadow: 0 10px 20px rgba(0,0,0,0.1);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7ff 0%, #dfe7ff 100%);
+      color: var(--dark);
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+      font-size: 2.2rem;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .quiz-name {
+      margin-bottom: 2rem;
+    }
+
+    .quiz-name label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    .quiz-name input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .quiz-name input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .question-block {
+      background: rgba(67, 97, 238, 0.05);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .question-block:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .question-block label {
+      display: block;
+      margin: 0.5rem 0;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    .question-block input[type="text"] {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .question-block input[type="text"]:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+    }
+
+    .option {
+      margin: 1rem 0;
+    }
+
+    .correct-answers {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .correct-answers label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      background: white;
+      border-radius: 50px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: var(--transition);
+    }
+
+    .correct-answers label:hover {
+      background: rgba(67, 97, 238, 0.1);
+    }
+
+    .correct-answers input[type="radio"] {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      transition: var(--transition);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .correct-answers input[type="radio"]:checked {
+      border-color: var(--primary);
+      background-color: var(--primary);
+    }
+
+    .correct-answers input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      .container {
+        padding: 1.5rem;
+      }
+      
+      .correct-answers {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Create Your Quiz</h1>
+    <form id="quizForm">
+      <div class="quiz-name">
+        <label for="quizTitle">Quiz Title:</label>
+        <input type="text" id="quizTitle" name="quizTitle" required placeholder="Enter a name for this quiz">
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <button type="submit" class="submit-btn">Submit Quiz</button>
+    </form>
+  </div>
+
+  <script>
+    const questionsContainer = document.getElementById('questionsContainer');
+
+    // Create 10 question blocks with the same structure
+    for (let i = 0; i < 10; i++) {
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question-block');
+
+      qDiv.innerHTML = `
+        <label>Question ${i + 1}:</label>
+        <input type="text" name="question${i}" required placeholder="Enter question ${i + 1}">
+
+        <div class="option">
+          <label>Option A: <input type="text" name="q${i}opt0" required></label>
+          <label>Option B: <input type="text" name="q${i}opt1" required></label>
+          <label>Option C: <input type="text" name="q${i}opt2" required></label>
+          <label>Option D: <input type="text" name="q${i}opt3" required></label>
+        </div>
+
+        <div class="correct-answers">
+          <label><input type="radio" name="q${i}correct" value="0" required> Correct: A</label>
+          <label><input type="radio" name="q${i}correct" value="1"> Correct: B</label>
+          <label><input type="radio" name="q${i}correct" value="2"> Correct: C</label>
+          <label><input type="radio" name="q${i}correct" value="3"> Correct: D</label>
+        </div>
+      `;
+      questionsContainer.appendChild(qDiv);
+    }
+
+    // Same form submission logic
+    document.getElementById('quizForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const quizTitle = document.getElementById('quizTitle').value.trim();
+      const quiz = [];
+
+      for (let i = 0; i < 10; i++) {
+        const question = document.querySelector(`input[name="question${i}"]`).value;
+        const options = [
+          document.querySelector(`input[name="q${i}opt0"]`).value,
+          document.querySelector(`input[name="q${i}opt1"]`).value,
+          document.querySelector(`input[name="q${i}opt2"]`).value,
+          document.querySelector(`input[name="q${i}opt3"]`).value
+        ];
+        const correctIndex = document.querySelector(`input[name="q${i}correct"]:checked`).value;
+
+        quiz.push({
+          question,
+          options,
+          correctAnswerIndex: parseInt(correctIndex)
+        });
+      }
+
+      fetch('/submit-quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quizName: quizTitle, questions: quiz })
+      })
+      .then(async res => {
+        if (res.ok) {
+          alert(`Quiz "${quizTitle}" submitted successfully!`);
+          window.location.href = "/";
+        } else {
+          const data = await res.json();
+          alert(data.error || "Failed to submit quiz.");
+          window.location.href = "/submit-quiz"; 
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error submitting quiz.");
+      });
+    });
+  </script>
+</body>
+</html>
