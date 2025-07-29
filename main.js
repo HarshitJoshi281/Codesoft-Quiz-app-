@@ -4,6 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import user from "./models/user.js"; 
 import Quiz from "./models/question.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -18,7 +20,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 
-await mongoose.connect("mongodb://localhost:27017/qizapp");
+await mongoose.connect(process.env.MONGO_URI);
 
 
 app.set("view engine", "ejs");
